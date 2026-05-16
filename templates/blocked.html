@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Access Blocked — SecureMFA{% endblock %}
+
+{% block content %}
+<div class="card card-danger">
+  <div class="card-header">
+    <div class="shield-icon">🚫</div>
+    <h1>Access Temporarily Blocked</h1>
+  </div>
+
+  {% if reason == "high_risk" %}
+  <p class="block-message">
+    Your login attempt was classified as <strong>high risk</strong> by the
+    AI/ML detection engine. This may indicate an automated attack or
+    access from an unrecognised device at an unusual time.
+  </p>
+  {% else %}
+  <p class="block-message">
+    Too many failed login attempts were detected in a short period.
+    Your account has been temporarily locked as a security precaution
+    against brute-force and dictionary attacks.
+  </p>
+  {% endif %}
+
+  <div class="countdown-box">
+    <p>Please try again in</p>
+    <div class="countdown" id="countdown">{{ remaining }}</div>
+    <p>seconds</p>
+  </div>
+
+  <p class="back-link"><a href="/">← Return to Login</a></p>
+</div>
+
+<script>
+  let remaining = {{ remaining }};
+  const el = document.getElementById("countdown");
+  const iv = setInterval(() => {
+    remaining--;
+    el.textContent = remaining;
+    if (remaining <= 0) {
+      clearInterval(iv);
+      window.location.href = "/";
+    }
+  }, 1000);
+</script>
+{% endblock %}
