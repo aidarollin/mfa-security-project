@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Login Successful — SecureMFA{% endblock %}
+
+{% block content %}
+<div class="card card-success">
+  <div class="card-header">
+    <div class="shield-icon">✅</div>
+    <h1>Authentication Successful</h1>
+  </div>
+
+  <div class="success-info">
+    <p>Welcome, <strong>{{ username }}</strong>.</p>
+    <p>You were authenticated via <strong>password + OTP (MFA)</strong>.</p>
+
+    <table class="info-table">
+      <tr>
+        <td>Risk Level</td>
+        <td><span class="badge badge-{{ risk_level }}">{{ risk_level | upper }}</span></td>
+      </tr>
+      <tr>
+        <td>ML Confidence</td>
+        <td>{{ "%.1f" | format(risk_score * 100) }}%</td>
+      </tr>
+      <tr>
+        <td>MFA Method</td>
+        <td>6-digit OTP</td>
+      </tr>
+      <tr>
+        <td>Status</td>
+        <td style="color: #86efac; font-weight: 700;">Access Granted</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="action-buttons">
+    <a href="/dashboard" class="btn btn-secondary">View Security Dashboard</a>
+    <a href="/logout" class="btn btn-outline">Logout</a>
+  </div>
+</div>
+{% endblock %}
