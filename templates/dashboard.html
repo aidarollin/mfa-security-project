@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Security Dashboard — SecureMFA{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+  <div class="dash-header">
+    <div>
+      <h1>🛡 Security Dashboard</h1>
+      <p class="subtitle">Real-time AI/ML risk assessment log — last 100 attempts</p>
+    </div>
+    <a href="/" class="btn btn-secondary">← Login Page</a>
+  </div>
+
+  <!-- Summary chips -->
+  {% if logs %}
+  {% set successes = logs | selectattr("outcome", "equalto", "success")       | list | length %}
+  {% set denied    = logs | selectattr("outcome", "equalto", "denied")        | list | length %}
+  {% set blocked   = logs | selectattr("outcome", "in", ["blocked", "blocked_high_risk"]) | list | length %}
+  {% set otp_sent  = logs | selectattr("outcome", "equalto", "otp_sent")      | list | length %}
+  <div class="summary-chips">
+    <div class="chip chip-success">✅ Successful <span>{{ successes }}</span></div>
+    <div class="chip chip-warn">📤 OTP Sent <span>{{ otp_sent }}</span></div>
+    <div class="chip chip-danger">❌ Denied <span>{{ denied }}</span></div>
+    <div class="chip chip-block">🚫 Blocked <span>{{ blocked }}</span></div>
+  </div>
+  {% endif %}
+
+  <div class="table-wrapper">
+    <table class="log-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Timestamp</th>
+          <th>Username</th>
+          <th>IP Address</th>
+          <th>Device</th>
+          <th>Prior Fails</th>
+          <th>Risk Level</th>
+          <th>ML Score</th>
+          <th>Outcome</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for log in logs %}
+        <tr class="row-{{ log.risk_level }}">
+          <td>{{ log.id }}</td>
+          <td>{{ log.timestamp }}</td>
+          <td><strong>{{ log.username }}</strong></td>
+          <td>{{ log.ip_address }}</td>
+          <td>{{ log.device_id }}</td>
+          <td>{{ log.failed_before }}</td>
+          <td><span class="badge badge-{{ log.risk_level }}">{{ (log.risk_level or 'N/A') | upper }}</span></td>
+          <td>
+            {% if log.risk_score %}
+              {{ "%.1f" | format(log.risk_score * 100) }}%
+            {% else %}N/A{% endif %}
+          </td>
+          <td>
+            <span class="outcome outcome-{{ log.outcome | replace('_', '-') }}">
+              {{ log.outcome | replace('_', ' ') }}
+            </span>
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="9" style="text-align:center; color: var(--text-muted); padding: 24px;">
+            No login attempts recorded yet.
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
