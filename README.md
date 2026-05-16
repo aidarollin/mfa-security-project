@@ -26,7 +26,7 @@ If OTP correct → Access Granted
 |--------|------|-----------------|
 | Naashiruddin | System Designer & Security Lead | Problem statement, architecture, risk logic |
 | Harold | AI/ML Developer | Random Forest algorithm, feature engineering, pseudocode |
-| Aida / Sabrina | Full-Stack Developer | Flask app, login UI, OTP integration |
+| Aida | Full-Stack Developer | Flask app, login UI, OTP integration |
 | Sabrina | QA Analyst & Technical Writer | Testing, effectiveness analysis, future improvements |
 
 
