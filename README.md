@@ -1,5 +1,4 @@
 # AI/ML-Enhanced Multi-Factor Authentication System
----
 
 ## Project Overview
 
