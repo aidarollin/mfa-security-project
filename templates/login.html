@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Login — SecureMFA{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <div class="shield-icon">🔐</div>
+    <h1>AI/ML-Enhanced MFA</h1>
+    <p class="subtitle">Adaptive Multi-Factor Authentication System</p>
+  </div>
+
+  {% if error %}
+  <div class="alert alert-danger">
+    {{ error }}
+    {% if risk_level %}
+    &nbsp;·&nbsp;Risk: <span class="badge badge-{{ risk_level }}">{{ risk_level }}</span>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  {% if attempts %}
+  <div class="attempt-bar">
+    <span>Failed attempts: {{ attempts }} / {{ threshold }}</span>
+    <div class="bar-track">
+      <div class="bar-fill" style="width: {{ (attempts / threshold * 100)|int }}%;"></div>
+    </div>
+  </div>
+  {% endif %}
+
+  <form method="POST" class="form" autocomplete="off">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" placeholder="Enter your username" required>
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="Enter your password" required>
+    </div>
+    <div class="form-group">
+      <label for="device_id">Device ID <span class="hint">(e.g. laptop-01)</span></label>
+      <input type="text" id="device_id" name="device_id" placeholder="Your device identifier" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Sign In Securely</button>
+  </form>
+
+  <div class="demo-credentials">
+    <p><strong>Demo Accounts</strong></p>
+    <code>student1 &nbsp;/ Secure123! &nbsp;&nbsp;&nbsp;/ laptop-01</code>
+    <code>student2 &nbsp;/ StrongPass456! / phone-02</code>
+    <code>admin &nbsp;&nbsp;&nbsp;/ Admin@789 &nbsp;&nbsp;&nbsp;&nbsp;/ workstation-01</code>
+  </div>
+
+  <div class="dashboard-link">
+    <a href="/dashboard">View Security Dashboard →</a>
+  </div>
+</div>
+{% endblock %}
