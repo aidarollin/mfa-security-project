@@ -1,8 +1,4 @@
 # AI/ML-Enhanced Multi-Factor Authentication System
-
-**Computer Security Project** — Mitigating Password Guessing Attacks  
-Deadline: 29 May 2026 | Total Marks: 20
-
 ---
 
 ## Project Overview
