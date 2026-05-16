@@ -64,6 +64,32 @@ print("  Scenario 4 — Correct Password, Unknown Device")
 print(DIVIDER)
 _post("student2 / StrongPass456! / hacker-device", "student2", "StrongPass456!", "hacker-device")
 
+# ── Scenario 5: Correct password, unknown device ─────────────────────────────
+print(f"\n{DIVIDER}")
+print("  Scenario 5 — Correct Password, Unknown Device (medium/high risk)")
+print(DIVIDER)
+_post("student1 / Secure123! / hacker-device (unknown)", "student1", "Secure123!", "hacker-device")
+
+time.sleep(1.5)
+
+# ── Scenario 6: Dictionary attack (sequential common passwords) ───────────────
+print(f"\n{DIVIDER}")
+print("  Scenario 6 — Dictionary Attack (common password list)")
+print(DIVIDER)
+sess2 = requests.Session()
+common_passwords = ["password", "123456", "admin", "letmein", "qwerty", "monkey", "dragon"]
+for i, pw in enumerate(common_passwords, 1):
+    r, sess2 = _post(f"Attempt {i}: admin / {pw}", "admin", pw, "unknown-device", session=sess2)
+    time.sleep(0.2)
+
 print(f"\n{'='*52}")
-print(f"  Done.  View results at {BASE}/dashboard")
+print("  Testing Summary")
+print(f"{'='*52}")
+print("  Scenario 1  — Normal login            → expects: OTP MFA triggered")
+print("  Scenario 2  — Single wrong password   → expects: denied (attempt 1/5)")
+print("  Scenario 3  — Rapid brute-force       → expects: BLOCKED after 5 fails")
+print("  Scenario 4  — Unknown device          → expects: OTP MFA (medium risk)")
+print("  Scenario 5  — Known pw, unknown dev   → expects: OTP MFA (elevated risk)")
+print("  Scenario 6  — Dictionary attack       → expects: BLOCKED after 5 fails")
+print(f"\n  View full results at {BASE}/dashboard")
 print(f"{'='*52}\n")
