@@ -152,11 +152,6 @@ mfa-security-project/
 ├── ml_model.py             Random Forest training + inference
 ├── simulate_attack.py      Automated test / demo script (Question 4)
 ├── requirements.txt        Python dependencies
-├── docs/
-│   ├── member1_system_design.md    Member 1 — architecture & problem statement
-│   ├── member2_algorithm.md        Member 2 — ML algorithm & pseudocode
-│   ├── member3_implementation.md   Member 3 — implementation guide
-│   └── member4_testing.md          Member 4 — testing & analysis
 ├── templates/
 │   ├── base.html           Shared layout
 │   ├── login.html          Login page (username + password + device)
